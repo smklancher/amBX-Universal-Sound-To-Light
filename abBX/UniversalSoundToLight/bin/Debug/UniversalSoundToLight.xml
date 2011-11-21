@@ -1,0 +1,878 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+UniversalSoundToLight
+</name>
+</assembly>
+<members>
+<member name="T:UniversalSoundToLight.amBXLibrary.RumbleWaveForms">
+	<summary>
+ Waveforms that are available for rumble devices
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.Heights">
+	<summary>
+ The height of a device relative to the user's head - 
+ see \ref page_locs_and_heights. 
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX_ThreadType">
+	<summary>
+ The thread types available for use by amBX.
+ Currently, there's only one type.
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX_RESULT">
+	<summary>
+ This is the type returned from almost all amBX calls - 
+ amBX_OK means the call was successful, any other result is an error.
+ 
+ Generally speaking, User Code won't have to deal with these error codes
+ as matching exceptions are generated when one of these error codes are
+ detected.
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX_EnabledStates">
+	<summary>
+ The state of a particular amBX object.
+ Objects can be enabled, disabled or in the process of being
+ enabled or disabled.
+ </summary>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBXColor.R">
+	<summary>
+ The floating point Red value (between 0 and 1).
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBXColor.B">
+	<summary>
+ The floating point Blue value (between 0 and 1).
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBXColor.G">
+	<summary>
+ The floating point Green value (between 0 and 1).        
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBXColor.#ctor(System.Single,System.Single,System.Single)">
+	<summary>
+ Construct a new amBX Color object.
+ </summary>
+	<param name="Red"></param>
+	<param name="Green"></param>
+	<param name="Blue"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBXColor.toColor">
+	<summary>
+ Convert an amBXColor into a normal Color object.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBXColor">
+	<summary>
+ Floating point color structure. Simplifies working with amBX style
+ floating point color values.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.#ctor">
+	<summary>
+ Class is not publicly creatable
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.amBXCreateInterface(System.IntPtr@,System.UInt32,System.UInt32,System.String,System.String,System.Int32,System.Boolean)">
+	<summary>
+ The function exported from the amBX runtime dll to initiate all 
+ communication with the amBX drivers.
+ The amBXrt.dll file is included with the amBX SDK.
+ </summary>
+	<param name="IamBXPtr"></param>
+	<param name="Major"></param>
+	<param name="Minor"></param>
+	<param name="AppName"></param>
+	<param name="AppVer"></param>
+	<param name="Memptr"></param>
+	<param name="UsingThreads"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.IamBX">
+	<summary>
+ This structure wraps the IamBX interface and its pointer
+ so it can be readily used when calling into the low level
+ amBX interface function pointers.
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.IamBXInterface">
+	<summary>
+ This structure matches the layout of the C amBX class
+ as an array of function pointers (the order is significant and must match!)
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.IamBXDelegates">
+	<summary>
+ Holds Delegates to all the functions pointed to by the pointers in
+ IamBXInterface.
+ This makes them easy to call via .net.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Connect(System.Int32,System.Int32,System.String,System.String)">
+	<summary>
+ Called when you want to open a channel of communication to 
+ the amBX drivers. Calling it more than once will have no effect.
+ Call DISCONNECT to shut down the connection
+ </summary>
+	<param name="MajorVersion">The Major version of the required amBX library.</param>
+	<param name="MinorVersion">The Minor version of the required amBX library.</param>
+	<param name="AppName">The name of your application.</param>
+	<param name="AppVersion">The version of your application.</param>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.IsConnected">
+	<summary>
+ Returns whether we've successfully connected to the amBX drivers
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.CheckConnected">
+	<summary>
+ Verify that we have a valid amBX connection before attempting
+ any operations.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.UpdateThreadRun">
+	<summary>
+ Private routine run on a worker thread to constantly update amBX
+ </summary>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.UpdatesPerSecond">
+	<summary>
+ How many times per second should the library update amBX?
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Disconnect">
+	<summary>
+ Disconnect from the amBX drivers and release all created objects
+ and buffers.
+ </summary>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Enabled">
+	<summary>
+ Enable or disable all devices currently associated with amBX.
+ </summary>
+	<value>A boolean, true to enable all devices, false to disable them.</value>
+	<returns>A boolean indicating where all devices are enabled or disabled.</returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Update(System.Int32)">
+	<summary>
+ Checks all device interfaces for updates and sends
+ updated attributes to the amBX engine, if required.  
+ 
+ Under normal circumstances, this library will automatically call Update
+ via a background worker thread, so there should be no need for your
+ application to call this method explicitly.
+ </summary>
+	<param name="MaxWaitTimeInMilliseconds">
+ Under normal configuration, this code handles threading and updates
+ so this parameter will be ignored.
+ </param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.GetVersionInfo(System.Int32@,System.Int32@,System.Int32@,System.Int32@)">
+	<summary>
+ Retrieves the version of the amBX drivers that are installed
+ </summary>
+	<param name="Major">The Major version of the installed amBX driver.</param>
+	<param name="Minor">The Minor version of the installed amBX driver.</param>
+	<param name="Revision">The revision number of the installed amBX driver.</param>
+	<param name="Build">The build number of the installed amBX driver.</param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.RunThread(UniversalSoundToLight.amBXLibrary.amBX_ThreadType,System.Int32)">
+	<summary>
+ The entry point for a thread used by amBX to send updates from 
+ the device interfaces to the amBX engine.
+ This should be called inside your thread, and it will not exit until you
+ call stopThread() with the thread ID from outside the thread. 
+ See page_threading for more details.
+ </summary>
+	<param name="ThreadType">
+ An indicator of how the thread being run should
+ be used. Currently the only valid value is \b amBX_Ambient_Update.
+ </param>
+	<param name="ThreadID">
+ An identifier for the thread being run. This value is 
+ used to identify the thread ready for 'stopThread'. This value
+ must be unique otherwise the functionality of stopThread is
+ undetermined. Typically the operating system thread ID is used.
+ </param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.StopThread(System.Int32)">
+	<summary>
+ Used to stop the execution of a thread started with runThread(). 
+ After the successful call of stopThread(), runThread() - which was called
+ inside the thread - will return. See page_threading.
+ </summary>
+	<param name="ThreadID">An identifier for the thread being stopped. This value
+	   should be the same as the ID passed to runThread().</param>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Lights">
+	<summary>
+ Retrieve the collection of all Lights objects
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.CreateLight(UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Private function to retrieve a Light interface pointer from ambx.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Fans">
+	<summary>
+ Retrieve the collection of all Fans objects
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.CreateFan(UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Private function to retrieve a fan interface pointer from ambx.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Rumbles">
+	<summary>
+ Retrieve the collection of all Rumbles objects
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.CreateRumble(UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Private function to retrieve a rumble interface pointer from ambx.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Events">
+	<summary>
+ Retrieve the collection of all Events objects
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.CreateEvent(System.Byte[])">
+	<summary>
+ Private function to retrieve an event interface pointer from ambx.
+ </summary>
+	<param name="FileBuffer"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Movies">
+	<summary>
+ Retrieve the collection of all Movies objects
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.CreateMovie(System.Byte[])">
+	<summary>
+ Private function to retrieve a movie interface pointer from ambx.
+ </summary>
+	<param name="FileBuffer"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.LightCollection">
+	<summary>
+ The Collection of light objects that have been created.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Light.#ctor(System.String,UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Constructor for a new Light object. You must indicate where the light
+ is located at this point. The location of the object cannot be changed.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Light.#ctor(UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Constructor for a new Light object. You must indicate where the light
+ is located at this point. The location of the object cannot be changed.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Light.Name">
+	<summary>
+ Name of this Light
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Light.Color">
+	<summary>
+ Set the target color (represented by a normal .net COLOR object)
+ of the light device interface, towards which the
+ actual color of the light should change at the fade rate set by 
+ FadeTime().
+ </summary>
+	<value>
+ A Color representing a Red Green Blue value for the light. 
+ The Alpha channel is ignored.
+ </value>
+	<returns>
+ A Color representing a Red Green Blue value of the light. 
+ The Alpha channel is left as 0.
+ </returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Light.amBXColor">
+	<summary>
+ Set the target color (represented by an amBXColor floating point color object)
+ of the light device interface, towards which the
+ actual color of the light should change at the fade rate set by 
+ FadeTime().
+ </summary>
+	<value>
+ An amBXColor representing a Red Green Blue value for the light. 
+ </value>
+	<returns>
+ An amBXColor representing a Red Green Blue value of the light. 
+ </returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Light.FadeTime">
+	<summary>
+ Sets the time taken to transition to the target color when the color 
+ is changed.
+ </summary>
+	<value>The fade time in milliseconds.</value>
+	<returns>The fade time in milliseconds.</returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Light.Location">
+	<summary>
+ Retrieve the target location of light effect.
+ This can be multiple locations OR'd together.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Light.Enabled">
+	<summary>
+ Retrieve the Enabled state of this light object.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Light.LightUpdateIntervalMS">
+	<summary>
+ updates in this light interface will not be sent to the amBX engine 
+ before a time of LightUpdateIntervalMS has passed since the previous 
+ update of this interface that has been sent to the engine.
+ Default value is 100ms.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Light.LightDelta">
+	<summary>
+ Minimum required change per color component that
+ triggers sending an update. 0.0f &lt;= fLightDelta &lt;= 1.0f
+ Default value is .02.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.Light">
+	<summary>
+ This object represents a Light object in amBX "space".
+ When you create it, you must indicate "where" the light is located.
+ The location cannot change once it's created.
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.FanCollection">
+	<summary>
+ The Collection of fan objects that have been created.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Fan.#ctor(UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Constructor for the Fan class.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Fan.#ctor(System.String,UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Constructor for the Fan class.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Fan.Initialize(System.String,UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Constructor for the Fan class.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Fan.Name">
+	<summary>
+ Name of this Fan
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Fan.Intensity">
+	<summary>
+ Set or retrieve the intensity level of the fan effect.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Fan.Location">
+	<summary>
+ Retrieve the location of this Fan effect. Note that the location is set
+ when the object is created and can't be changed.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Fan.Enabled">
+	<summary>
+ Retrieve the enabled state of this fan object.
+ States are:
+   ENABLED if the fan is enabled
+   ENABLING if the fan is currently not enabled, but will 
+      be enabled after the next time the amBX.Update function is 
+      called.
+   DISABLED if the fan is disabled
+   DISABLING if the fan is currently enabled, but will disabled
+      after the next time the amBX.Update function is called.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Fan.Enable">
+	<summary>
+ Enable this fan object
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Fan.Disable">
+	<summary>
+ Disable this fan object
+ </summary>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Fan.FanUpdateIntervalMS">
+	<summary>
+ updates on this fan will not be sent to the amBX engine 
+ before a time of FanUpdateIntervalMS has passed since the previous 
+ update of this interface that has been sent to the engine.
+ Default value is 100ms
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Fan.FanDelta">
+	<summary>
+ Minimum required change per color component that
+ triggers sending an update. 0.0f &lt;= fLightDelta &lt;= 1.0f
+ Default value is .02
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.Fan">
+	<summary>
+ This class represents the fan device interface - enabling the 
+ creation of air flow (wind) experiences. 
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.RumbleCollection">
+	<summary>
+ The Collection of rumble objects that have been created.
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.Rumble.IamBXRumbleInterface">
+	<summary>
+ The C interface structure of the rumble object
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.#ctor(UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Constructor for a new Rumble object.
+ The location and Height are declared at creation time and cannot be changed.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.#ctor(System.String,UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Constructor for a new Rumble object.
+ The location and Height are declared at creation time and cannot be changed.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.Initialize(System.String,UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Actually create the rumble object
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.ReInitialize(UniversalSoundToLight.amBXLibrary.Locations,UniversalSoundToLight.amBXLibrary.Heights)">
+	<summary>
+ Provides a way to reinitialize the underlying object so we can disable it.
+ </summary>
+	<param name="Location"></param>
+	<param name="Height"></param>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Rumble.Name">
+	<summary>
+ Name of this Rumble
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Rumble.Height">
+	<summary>
+ Retrieves the height of the rumble object as it was set during object 
+ creation.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.Release">
+	<summary>
+ Release the internal ambx interface for this object
+ This is normally automatically performed when the object is disposed of
+ or when the ambx object is released.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.SetRumble(System.String,System.Single,System.Single)">
+	<summary>
+ Sets the Rumble Waveform, speed and intensity for this rumble object.
+ </summary>
+	<param name="Name">The string name of the rumble waveform.</param>
+	<param name="Speed">The speed of playback, from 0.0 to 10.0</param>
+	<param name="Intensity">The intensity of the rumble effect, from 0.0 to 1.0</param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.SetRumble(UniversalSoundToLight.amBXLibrary.RumbleWaveForms,System.Single,System.Single)">
+	<summary>
+ Sets the Rumble Waveform, speed and intensity for this rumble object.
+ </summary>
+	<param name="RumbleWaveForm">The ID of the rumble waveform.</param>
+	<param name="Speed">The speed of playback, from 0.0 to 10.0</param>
+	<param name="Intensity">The intensity of the rumble effect, from 0.0 to 1.0</param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.GetRumble(System.String@,System.Single@,System.Single@)">
+	<summary>
+ Retrieve the rumble waveform, speed and intensity as currently set
+ for this rumble object.
+ </summary>
+	<param name="Name"></param>
+	<param name="Speed"></param>
+	<param name="Intensity"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.GetRumble(UniversalSoundToLight.amBXLibrary.RumbleWaveForms@,System.Single@,System.Single@)">
+	<summary>
+ Retrieve the rumble waveform, speed and intensity as currently set
+ for this rumble object.
+ </summary>
+	<param name="RumbleWaveForm"></param>
+	<param name="Speed"></param>
+	<param name="Intensity"></param>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Rumble.Location">
+	<summary>
+ Retrieve the location of this rumble object (set when the object 
+ was created).
+ Note that this could be a combination of location values.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Rumble.Enabled">
+	<summary>
+ Retrieve the Enabled state of this object.
+ States can be:
+   ENABLED if the rumble is enabled
+   ENABLING if the rumble is currently not enabled, but will 
+      be enabled after the next time the IamBX.Update() is called.
+   DISABLED if the rumble is not disabled
+   DISABLING if the rumble is currently enabled, but will
+      be disabled after the next time the IamBX.Update() is called.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.Enable">
+	<summary>
+ Enable this rumble object.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Rumble.Disable">
+	<summary>
+ Disable this rumble object.
+ </summary>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Rumble.RumbleUpdateIntervalMS">
+	<summary>
+ updates in this rumble interface will not be sent to the amBX engine 
+ before a time of RumbleUpdateIntervalMS has passed since the previous 
+ update of this interface that has been sent to the engine.
+ Default value is 100ms
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Rumble.SpeedDelta">
+	<summary>
+ Minimum required change of the speed component that
+ triggers sending an update. 0.0f &lt;= SpeedDelta &lt;= 1.0f
+ Default value is .02
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Rumble.IntensityDelta">
+	<summary>
+ Minimum required change Intensity component that
+ triggers sending an update. 0.0f &lt;= IntensityDelta &lt;= 1.0f
+ Default value is .02
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.Rumble">
+	<summary>
+ This class represents an amBX Rumble object, enabling the creation
+ of rumble experiences. 
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.EventCollection">
+	<summary>
+ The Collection of Event objects that have been created.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Event.#ctor(System.Byte[])">
+	<summary>
+ Create a new Event object based on the contents of a buffer.
+ </summary>
+	<param name="FileBuffer">
+ A byte array containing the event data, preferably read from 
+ a bn/ck file. Note, the buffer must contain valid data and cannot
+ be nothing or empty.
+ </param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Event.#ctor(System.String)">
+	<summary>
+ Create a new Event object based on the contents of a bn/ck file.
+ </summary>
+	<param name="FileName"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Event.#ctor(System.String,System.Byte[])">
+	<summary>
+ Create a new Event object based on the contents of a buffer.
+ </summary>
+	<param name="FileBuffer">
+ A byte array containing the event data, preferably read from 
+ a bn/ck file. Note, the buffer must contain valid data and cannot
+ be nothing or empty.
+ </param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Event.#ctor(System.String,System.String)">
+	<summary>
+ Create a new Event object based on the contents of a bn/ck file.
+ </summary>
+	<param name="FileName"></param>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Event.Name">
+	<summary>
+ Name of this Event
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Event.Play">
+	<summary>
+ Plays the amBX file loaded when the interface was created.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Event.Stop">
+	<summary>
+ Stops the playback of the event.
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.Event">
+	<summary>
+ Create an Event, which is usually a short sequence of effects that cannot
+ be paused or seeked into, or an ambience effect which can be simply turned on
+ or off.
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.MovieCollection">
+	<summary>
+ The Collection of Event objects that have been created.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.#ctor(System.Byte[])">
+	<summary>
+ Create a new Movie object based on the contents of a buffer.
+ </summary>
+	<param name="FileBuffer">
+ A byte array containing the event data, preferably read from 
+ a bn/ck file.
+ </param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.#ctor(System.String,System.Byte[])">
+	<summary>
+ Create a new Movie object based on the contents of a buffer.
+ </summary>
+	<param name="FileBuffer">
+ A byte array containing the event data, preferably read from 
+ a bn/ck file.
+ </param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.#ctor(System.String)">
+	<summary>
+ Create a new Movie object based on the contents of a bn/ck file.
+ </summary>
+	<param name="FileName"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.#ctor(System.String,System.String)">
+	<summary>
+ Create a new Movie object based on the contents of a bn/ck file.
+ </summary>
+	<param name="FileName"></param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.Initialize(System.String,System.Byte[])">
+	<summary>
+ Initialize the internal elements and create the Movie interface
+ </summary>
+	<param name="FileBuffer"></param>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Movie.Name">
+	<summary>
+ Name of this Movie
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.Play">
+	<summary>
+ Method to simplify playing a loaded movie.
+ Basically, just Seek to the beginning and unsuspend.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.Pause">
+	<summary>
+ Pause this movie's playback
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.Continue">
+	<summary>
+ Continue a paused movie
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.Stop">
+	<summary>
+ Stop playback and reset the movie to the beginning.
+ </summary>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Movie.Frozen">
+	<summary>
+ Sets or retrieves the frozen state of this movie.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.amBXLibrary.amBX.Movie.Suspended">
+	<summary>
+ Sets or retrieves the suspended state of this move.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Movie.Seek(System.Single)">
+	<summary>
+ Jumps to the specified point in time within the movie. The seek will
+ on be made if the absolute difference of the current time 
+ and the last seek time is greater than the seek threshold
+ (Currently 0.2 seconds).
+ </summary>
+	<param name="Seconds"></param>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.Movie">
+	<summary>
+ Represents an amBX Movie object, which is a sequence of effects that can
+ be paused or seeked into, and restarted arbitrarily. Mainly used for 
+ cutscenes. You should only create movie objects as you need them, and release
+ them when done.
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBX">
+	<summary>
+ Core ambx Class. This class is static and cannot be instantiated.
+ It represents the core amBX device and as such, there can only ever be one
+ to a machine.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.Exceptions.#ctor">
+	<summary>
+ Eases exception handling and generation, Internal only, not a creatable class.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.Exceptions.Check(UniversalSoundToLight.amBXLibrary.amBX_RESULT,System.String)">
+	<summary>
+ Check an amBX error code and throw the applicable exception
+ </summary>
+	<param name="ErrCode"></param>
+	<param name="Message"></param>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.amBXException">
+	<summary>
+ The Generic amBX exception. All the specific exceptions inherit from
+ this one.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.Utility.ConstrainFloat(System.Single@)">
+	<summary>
+ Simple routine to contrains a single between 0 and 1.
+ </summary>
+	<param name="v"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.Utility">
+	<summary>
+ Various routines for use internally by the amBX library classes.
+ </summary>
+	<remarks></remarks>
+</member><member name="P:UniversalSoundToLight.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:UniversalSoundToLight.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:UniversalSoundToLight.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>
