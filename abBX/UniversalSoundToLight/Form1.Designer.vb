@@ -28,8 +28,10 @@ Partial Class Form1
         Me.cmdStop = New System.Windows.Forms.Button()
         Me.LeftLightSim = New System.Windows.Forms.PictureBox()
         Me.RightLightSim = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         CType(Me.LeftLightSim, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RightLightSim, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'cmbSource
@@ -49,7 +51,7 @@ Partial Class Form1
         Me.txtLog.Multiline = True
         Me.txtLog.Name = "txtLog"
         Me.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtLog.Size = New System.Drawing.Size(428, 150)
+        Me.txtLog.Size = New System.Drawing.Size(428, 197)
         Me.txtLog.TabIndex = 2
         '
         'cmdStart
@@ -72,35 +74,46 @@ Partial Class Form1
         '
         'LeftLightSim
         '
-        Me.LeftLightSim.Location = New System.Drawing.Point(257, 12)
+        Me.LeftLightSim.Location = New System.Drawing.Point(267, 21)
         Me.LeftLightSim.Name = "LeftLightSim"
-        Me.LeftLightSim.Size = New System.Drawing.Size(85, 50)
+        Me.LeftLightSim.Size = New System.Drawing.Size(77, 33)
         Me.LeftLightSim.TabIndex = 5
         Me.LeftLightSim.TabStop = False
         '
         'RightLightSim
         '
-        Me.RightLightSim.Location = New System.Drawing.Point(348, 12)
+        Me.RightLightSim.Location = New System.Drawing.Point(350, 21)
         Me.RightLightSim.Name = "RightLightSim"
-        Me.RightLightSim.Size = New System.Drawing.Size(85, 50)
+        Me.RightLightSim.Size = New System.Drawing.Size(77, 33)
         Me.RightLightSim.TabIndex = 6
         Me.RightLightSim.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.Color.Black
+        Me.PictureBox1.Location = New System.Drawing.Point(257, 12)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(183, 51)
+        Me.PictureBox1.TabIndex = 7
+        Me.PictureBox1.TabStop = False
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(452, 231)
+        Me.ClientSize = New System.Drawing.Size(452, 278)
         Me.Controls.Add(Me.RightLightSim)
         Me.Controls.Add(Me.LeftLightSim)
         Me.Controls.Add(Me.cmdStop)
         Me.Controls.Add(Me.cmdStart)
         Me.Controls.Add(Me.txtLog)
         Me.Controls.Add(Me.cmbSource)
+        Me.Controls.Add(Me.PictureBox1)
         Me.Name = "Form1"
         Me.Text = "Form1"
         CType(Me.LeftLightSim, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RightLightSim, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -111,5 +124,6 @@ End Sub
     Friend WithEvents cmdStop As System.Windows.Forms.Button
     Friend WithEvents LeftLightSim As System.Windows.Forms.PictureBox
     Friend WithEvents RightLightSim As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
 
 End Class

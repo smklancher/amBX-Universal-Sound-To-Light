@@ -6,7 +6,20 @@ UniversalSoundToLight
 </name>
 </assembly>
 <members>
-<member name="T:UniversalSoundToLight.amBXLibrary.RumbleWaveForms">
+<member name="P:UniversalSoundToLight.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:UniversalSoundToLight.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:UniversalSoundToLight.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="T:UniversalSoundToLight.amBXLibrary.RumbleWaveForms">
 	<summary>
  Waveforms that are available for rumble devices
  </summary>
@@ -860,19 +873,6 @@ UniversalSoundToLight
  Various routines for use internally by the amBX library classes.
  </summary>
 	<remarks></remarks>
-</member><member name="P:UniversalSoundToLight.My.Resources.Resources.ResourceManager">
-	<summary>
-  Returns the cached ResourceManager instance used by this class.
-</summary>
-</member><member name="P:UniversalSoundToLight.My.Resources.Resources.Culture">
-	<summary>
-  Overrides the current thread's CurrentUICulture property for all
-  resource lookups using this strongly typed resource class.
-</summary>
-</member><member name="T:UniversalSoundToLight.My.Resources.Resources">
-	<summary>
-  A strongly-typed resource class, for looking up localized strings, etc.
-</summary>
 </member>
 </members>
 </doc>
