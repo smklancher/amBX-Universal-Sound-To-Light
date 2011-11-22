@@ -7,6 +7,8 @@ Public Class Light
     Public Shared LeftLightSim As PictureBox
     Public Shared RightLightSim As PictureBox
 
+    Public Shared SimOnly As Boolean = True
+
 
     Public Shared Sub Init(Optional LeftSim As PictureBox = Nothing, Optional RightSim As PictureBox = Nothing)
         'set pictureboxes to use for similated lights
@@ -18,6 +20,9 @@ Public Class Light
             'connect to the drivers
             amBX.Connect(1, 0, Application.ProductName, Application.ProductVersion)
 
+            'if connect didn't error, then it isn't just a simulation
+            SimOnly = False
+
             'set up lights on each side
             LeftLight = amBX.Lights.Add("Left", Locations.NorthEast Or Locations.East Or Locations.SouthEast, amBXLibrary.Heights.AnyHeight)
             RightLight = amBX.Lights.Add("Right", Locations.NorthWest Or Locations.West Or Locations.SouthWest, amBXLibrary.Heights.AnyHeight)
@@ -26,6 +31,8 @@ Public Class Light
 
         Catch ex As amBXExceptionamBXrtdllNotFound
             MsgBox("Ensure that ambxrt.dll is in the same folder as this application.")
+        Catch ex As amBXExceptionNotInstalled
+            MsgBox("amBX drivers not installed, lights will be simulation only.")
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -33,9 +40,11 @@ Public Class Light
     End Sub
 
     Public Shared Sub SetColors(LeftColor As System.Drawing.Color, RightColor As System.Drawing.Color)
-        LeftLight.Color = LeftColor
-        RightLight.Color = RightColor
-
+        If SimOnly = False Then
+            LeftLight.Color = LeftColor
+            RightLight.Color = RightColor
+        End If
+        
         If LeftLightSim IsNot Nothing Then
             LeftLightSim.BackColor = LeftColor
             RightLightSim.BackColor = RightColor
