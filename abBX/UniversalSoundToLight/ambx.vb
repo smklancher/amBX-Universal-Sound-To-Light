@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Threading
+Imports System.Threading.Tasks
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -425,7 +426,7 @@ Namespace amBXLibrary
 
         ''' <summary>
         ''' Called when you want to open a channel of communication to 
-        ''' the amBX drivers. Calling it more than once will have no effect.
+        ''' the amBX drivers without "UsingThreading". Calling it more than once will have no effect.
         ''' Call DISCONNECT to shut down the connection
         ''' </summary>
         ''' <param name="MajorVersion">The Major version of the required amBX library.</param>
@@ -436,11 +437,68 @@ Namespace amBXLibrary
         Public Shared Sub Connect(ByVal MajorVersion As Integer, ByVal MinorVersion As Integer, ByVal AppName As String, ByVal AppVersion As String)
             '---- call into the ambx runtime to get a reference
             If Not amBX.IsConnected Then
+                'SMK 2011-11-24 - Connect to driver with "UsingThreading" false
+                'This still uses a separate thread, but updates happen automatically
+                ConnectInternal(MajorVersion, MinorVersion, AppName, AppVersion, False)
+
+                '---- default to 20 updates per second
+                amBX.UpdatesPerSecond = 20  'this also starts the the update thread
+            End If
+        End Sub
+
+
+        ''' <summary>
+        ''' Called when you want to open a channel of communication to 
+        ''' the amBX drivers "UsingThreading". Calling it more than once will have no effect.
+        ''' Call DISCONNECT to shut down the connection
+        ''' </summary>
+        ''' <param name="MajorVersion">The Major version of the required amBX library.</param>
+        ''' <param name="MinorVersion">The Minor version of the required amBX library.</param>
+        ''' <param name="AppName">The name of your application.</param>
+        ''' <param name="AppVersion">The version of your application.</param>
+        ''' <remarks>
+        ''' SMK 2011-11-24 - Separate function for threading so these changes can be a 
+        ''' drop-in replacement for the original ambx.vb without breaking original functions.
+        ''' </remarks>
+        Public Shared Sub ConnectThreading(ByVal MajorVersion As Integer, ByVal MinorVersion As Integer, ByVal AppName As String, ByVal AppVersion As String)
+            '---- call into the ambx runtime to get a reference
+            If Not amBX.IsConnected Then
+                'Connect using threading
+                ConnectInternal(MajorVersion, MinorVersion, AppName, AppVersion, True)
+
+                'start the task which will be the thread that responds to calls to update
+                UpdateTask = Task.Factory.StartNew(AddressOf TaskFunc, TaskCreationOptions.LongRunning)
+            End If
+        End Sub
+
+        Private Shared UpdateTask As Task
+
+        Private Shared Sub TaskFunc()
+            Thread.CurrentThread.IsBackground = True
+            Thread.CurrentThread.Name = "amBX RunThread"
+
+            RunThread(amBX_ThreadType.amBX_Ambient_Update, Thread.CurrentThread.ManagedThreadId)
+        End Sub
+
+
+        ''' <summary>
+        ''' Called when you want to open a channel of communication to 
+        ''' the amBX drivers. Calling it more than once will have no effect.
+        ''' Call DISCONNECT to shut down the connection
+        ''' </summary>
+        ''' <param name="MajorVersion">The Major version of the required amBX library.</param>
+        ''' <param name="MinorVersion">The Minor version of the required amBX library.</param>
+        ''' <param name="AppName">The name of your application.</param>
+        ''' <param name="AppVersion">The version of your application.</param>
+        ''' <remarks></remarks>
+        Private Shared Sub ConnectInternal(ByVal MajorVersion As Integer, ByVal MinorVersion As Integer, ByVal AppName As String, ByVal AppVersion As String, ByVal UsingThreads As Boolean)
+            '---- call into the ambx runtime to get a reference
+            If Not amBX.IsConnected Then
                 '---- first create an intptr, this is what the amBXCreateInterface will give us back
                 '     ie a ptr to a block of memory that ambx is managing that contains
                 '     an array of function pointers
                 Try
-                    amBXCreateInterface(_IamBX.IamBXPtr, MajorVersion, MinorVersion, AppName, AppVersion, 0, False)
+                    amBXCreateInterface(_IamBX.IamBXPtr, MajorVersion, MinorVersion, AppName, AppVersion, 0, UsingThreads)
 
                 Catch ex As DllNotFoundException
                     '---- throw a specific file not found error in this case
@@ -457,10 +515,13 @@ Namespace amBXLibrary
                 '---- now create all the delegates for this interface
                 _IamBX.IamBXDelegates.Generate(_IamBX.IamBXInterface)
 
-                '---- default to 20 updates per second
-                amBX.UpdatesPerSecond = 20
             End If
         End Sub
+
+
+
+
+
         Private Shared _IamBX As IamBX
         Private Shared _UpdateThread As Thread
 

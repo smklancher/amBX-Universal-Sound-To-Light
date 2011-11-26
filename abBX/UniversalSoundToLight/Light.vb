@@ -20,14 +20,15 @@ Public Class Light
             'connect to the drivers
             amBX.Connect(1, 0, Application.ProductName, Application.ProductVersion)
 
-            'if connect didn't error, then it isn't just a simulation
-            SimOnly = False
-
+            
             'set up lights on each side
             LeftLight = amBX.Lights.Add("Left", Locations.NorthEast Or Locations.East Or Locations.SouthEast, amBXLibrary.Heights.AnyHeight)
             RightLight = amBX.Lights.Add("Right", Locations.NorthWest Or Locations.West Or Locations.SouthWest, amBXLibrary.Heights.AnyHeight)
 
             'the focus is for one light on each side, but should I add something for center, north, south?
+
+            'if connect didn't error, then it isn't just a simulation
+            SimOnly = False
 
         Catch ex As amBXExceptionamBXrtdllNotFound
             MsgBox("Ensure that ambxrt.dll is in the same folder as this application.")
