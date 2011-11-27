@@ -99,7 +99,7 @@ UniversalSoundToLight
  Class is not publicly creatable
  </summary>
 	<remarks></remarks>
-</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.amBXCreateInterface(System.IntPtr@,System.UInt32,System.UInt32,System.String,System.String,System.Int32,System.Boolean)">
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.amBXCreateInterface(System.IntPtr@,System.UInt32,System.UInt32,System.String,System.String,System.Int16,System.Boolean)">
 	<summary>
  The function exported from the amBX runtime dll to initiate all 
  communication with the amBX drivers.
@@ -113,7 +113,7 @@ UniversalSoundToLight
 	<param name="Memptr"></param>
 	<param name="UsingThreads"></param>
 	<returns></returns>
-	<remarks></remarks>
+	<remarks>SMK 2011-11-27 Added CallingConvention:=CallingConvention.Cdecl to prevent pInvokeStackImbalance MDA</remarks>
 </member><member name="T:UniversalSoundToLight.amBXLibrary.amBX.IamBX">
 	<summary>
  This structure wraps the IamBX interface and its pointer
@@ -135,6 +135,31 @@ UniversalSoundToLight
  </summary>
 	<remarks></remarks>
 </member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.Connect(System.Int32,System.Int32,System.String,System.String)">
+	<summary>
+ Called when you want to open a channel of communication to 
+ the amBX drivers without "UsingThreading". Calling it more than once will have no effect.
+ Call DISCONNECT to shut down the connection
+ </summary>
+	<param name="MajorVersion">The Major version of the required amBX library.</param>
+	<param name="MinorVersion">The Minor version of the required amBX library.</param>
+	<param name="AppName">The name of your application.</param>
+	<param name="AppVersion">The version of your application.</param>
+	<remarks></remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.ConnectThreading(System.Int32,System.Int32,System.String,System.String)">
+	<summary>
+ Called when you want to open a channel of communication to 
+ the amBX drivers "UsingThreading". Calling it more than once will have no effect.
+ Call DISCONNECT to shut down the connection
+ </summary>
+	<param name="MajorVersion">The Major version of the required amBX library.</param>
+	<param name="MinorVersion">The Minor version of the required amBX library.</param>
+	<param name="AppName">The name of your application.</param>
+	<param name="AppVersion">The version of your application.</param>
+	<remarks>
+ SMK 2011-11-24 - Separate function for threading so these changes can be a 
+ drop-in replacement for the original ambx.vb without breaking original functions.
+ </remarks>
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.ConnectInternal(System.Int32,System.Int32,System.String,System.String,System.Boolean)">
 	<summary>
  Called when you want to open a channel of communication to 
  the amBX drivers. Calling it more than once will have no effect.
