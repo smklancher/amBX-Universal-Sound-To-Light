@@ -18,7 +18,7 @@ Public Class Light
 
         Try
             'connect to the drivers
-            amBX.Connect(1, 0, Application.ProductName, Application.ProductVersion)
+            amBX.ConnectThreading(1, 0, Application.ProductName, Application.ProductVersion)
 
             
             'set up lights on each side
@@ -34,6 +34,7 @@ Public Class Light
             MsgBox("Ensure that ambxrt.dll is in the same folder as this application.")
         Catch ex As amBXExceptionNotInstalled
             MsgBox("amBX drivers not installed, lights will be simulation only.")
+            SimOnly = True
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

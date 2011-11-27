@@ -287,9 +287,10 @@ Namespace amBXLibrary
         ''' <param name="Memptr"></param>
         ''' <param name="UsingThreads"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        <DllImport("ambxrt.dll", ExactSpelling:=True, CharSet:=CharSet.Auto)> _
-        Private Shared Function amBXCreateInterface(ByRef IamBXPtr As IntPtr, ByVal Major As UInt32, ByVal Minor As UInt32, ByVal AppName As String, ByVal AppVer As String, ByVal Memptr As Integer, ByVal UsingThreads As Boolean) As Integer
+        ''' <remarks>SMK 2011-11-27 Added CallingConvention:=CallingConvention.Cdecl to prevent pInvokeStackImbalance MDA</remarks>
+        <DllImport("ambxrt.dll", ExactSpelling:=True, CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.Cdecl)> _
+        Private Shared Function amBXCreateInterface(ByRef IamBXPtr As IntPtr, ByVal Major As UInt32, ByVal Minor As UInt32, _
+                                                    ByVal AppName As String, ByVal AppVer As String, ByVal Memptr As Short, ByVal UsingThreads As Boolean) As Integer
         End Function
 #End Region
 
@@ -498,7 +499,7 @@ Namespace amBXLibrary
                 '     ie a ptr to a block of memory that ambx is managing that contains
                 '     an array of function pointers
                 Try
-                    amBXCreateInterface(_IamBX.IamBXPtr, MajorVersion, MinorVersion, AppName, AppVersion, 0, UsingThreads)
+                    amBXCreateInterface(_IamBX.IamBXPtr, MajorVersion, MinorVersion, AppName, AppVersion, Nothing, UsingThreads)
 
                 Catch ex As DllNotFoundException
                     '---- throw a specific file not found error in this case
