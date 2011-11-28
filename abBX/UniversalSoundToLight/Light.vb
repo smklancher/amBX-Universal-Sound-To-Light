@@ -27,6 +27,12 @@ Public Class Light
             LeftLight = amBX.Lights.Add("Left", Locations.NorthWest Or Locations.West Or Locations.SouthWest, amBXLibrary.Heights.AnyHeight)
             RightLight = amBX.Lights.Add("Right", Locations.NorthEast Or Locations.East Or Locations.SouthEast, amBXLibrary.Heights.AnyHeight)
 
+            'Update the lights no matter how small or how often the change.  TODO: Make option for performance
+            LeftLight.LightDelta = 0.0
+            RightLight.LightDelta = 0.0
+            LeftLight.LightUpdateIntervalMS = 0
+            RightLight.LightUpdateIntervalMS = 0
+
             'the focus is for one light on each side, but should I add something for center, north, south?
 
             'if connect didn't error, then it isn't just a simulation
