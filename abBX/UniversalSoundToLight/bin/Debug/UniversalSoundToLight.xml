@@ -19,6 +19,12 @@ UniversalSoundToLight
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
+</member><member name="M:UniversalSoundToLight.Sound.FreqencyEnergy(System.Int32,System.Int32)">
+	<summary>
+ Returns the energy(?) (0.0-1.0) of the bounded freqencies of sound in Hz.
+ </summary>
+	<param name="Low">The low.</param>
+	<param name="High">The high.</param><returns>energy(?) (0.0-1.0)</returns>
 </member><member name="T:UniversalSoundToLight.amBXLibrary.RumbleWaveForms">
 	<summary>
  Waveforms that are available for rumble devices
@@ -99,7 +105,7 @@ UniversalSoundToLight
  Class is not publicly creatable
  </summary>
 	<remarks></remarks>
-</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.amBXCreateInterface(System.IntPtr@,System.UInt32,System.UInt32,System.String,System.String,System.Int16,System.Boolean)">
+</member><member name="M:UniversalSoundToLight.amBXLibrary.amBX.amBXCreateInterface(System.IntPtr@,System.UInt32,System.UInt32,System.String,System.String,System.Int32,System.Boolean)">
 	<summary>
  The function exported from the amBX runtime dll to initiate all 
  communication with the amBX drivers.

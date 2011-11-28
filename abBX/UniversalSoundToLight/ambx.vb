@@ -290,7 +290,7 @@ Namespace amBXLibrary
         ''' <remarks>SMK 2011-11-27 Added CallingConvention:=CallingConvention.Cdecl to prevent pInvokeStackImbalance MDA</remarks>
         <DllImport("ambxrt.dll", ExactSpelling:=True, CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.Cdecl)> _
         Private Shared Function amBXCreateInterface(ByRef IamBXPtr As IntPtr, ByVal Major As UInt32, ByVal Minor As UInt32, _
-                                                    ByVal AppName As String, ByVal AppVer As String, ByVal Memptr As Short, ByVal UsingThreads As Boolean) As Integer
+                                                    ByVal AppName As String, ByVal AppVer As String, ByVal Memptr As Integer, ByVal UsingThreads As Boolean) As Integer
         End Function
 #End Region
 
@@ -473,13 +473,18 @@ Namespace amBXLibrary
         End Sub
 
         Private Shared UpdateTask As Task
+        Private Shared ThreadStopped As Boolean = False
 
         Private Shared Sub TaskFunc()
             Thread.CurrentThread.IsBackground = True
             Thread.CurrentThread.Name = "amBX RunThread"
 
             RunThread(amBX_ThreadType.amBX_Ambient_Update, Thread.CurrentThread.ManagedThreadId)
+
+            Thread.VolatileWrite(ThreadStopped, True)
         End Sub
+
+
 
 
         ''' <summary>

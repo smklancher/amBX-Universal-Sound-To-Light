@@ -4,21 +4,15 @@ Imports System.Runtime.InteropServices
 
 Public Class Sound
     Public Shared Source As Integer = -1
-    Public Shared Property Interval As Integer
-        Set(value As Integer)
-            SampleTimer.Interval = value
-        End Set
-        Get
-            Return SampleTimer.Interval
-        End Get
-    End Property
-
-
-    Private Shared WithEvents SampleTimer As New Timer
     Private Shared recHandle As Integer
 
-    Public Shared Sub Init()
-        Interval = 100
+    Public Shared Sub Init(MainWindow As System.IntPtr)
+        'register BASS.NET to suppress splash screen
+        Un4seen.Bass.BassNet.Registration("smknight@gmail.com", "2X28221818152222")
+
+        'init default output
+        Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, MainWindow)
+
     End Sub
 
 
@@ -31,12 +25,10 @@ Public Class Sound
             Bass.BASS_ChannelPlay(recHandle, False)
 
             'MessageBox.Show(String.Join(", ", Bass.BASS_RecordGetInputNames()))
-            SampleTimer.Enabled = True
         End If
     End Sub
 
     Public Shared Sub StopRecord()
-        SampleTimer.Enabled = False
         Bass.BASS_RecordFree()
     End Sub
 
@@ -48,7 +40,7 @@ Public Class Sound
         recHandle = Bass.BASS_RecordStart(44100, 2, BASSFlag.BASS_DEFAULT, Nothing, IntPtr.Zero)
     End Sub
 
-    Private Shared Sub SampleTimer_Tick(sender As Object, e As System.EventArgs) Handles SampleTimer.Tick
+    Public Shared Sub Sound_Tick()
 
         'volume levels
         Dim level As Integer
@@ -86,15 +78,29 @@ Public Class Sound
 
         Bass.BASS_ChannelSetPosition(recHandle, 0)
 
-        Dim BassEnergy As Double = vis.DetectFrequency(recHandle, 60, 250, False)
+        Dim BassEnergy As Double = Sound.FreqencyEnergy(60, 250)
 
-        Dim HowRed As Integer = 0
-        HowRed = Math.Min(BassEnergy * 255 * 2, 255)
 
-        Light.SetColors(Color.FromArgb(HowRed, 0, 0), Color.FromArgb(HowRed, 0, 0))
-
+        Dim BassLight As Color = Light.ColorFromEnergy(BassEnergy, 0, 0, 1)
+        'Light.SetColors(BassLight, BassLight)
+        'Light.Update()
 
         Log("Base: " & BassEnergy)
+
+
+
+        Bass.BASS_ChannelSetPosition(recHandle, 0)
+
+
+
+        Dim MidEnergy As Double = Sound.FreqencyEnergy(250, 2000)
+
+
+        Dim MidLight As Color = Light.ColorFromEnergy(MidEnergy, 0, 1, 0)
+        'Light.SetColors(BassLight, BassLight)
+        'Light.Update()
+
+        Log("Midrange: " & MidEnergy)
 
 
 
@@ -111,9 +117,27 @@ Public Class Sound
 
         Log("")
 
+
+        Light.SetColors(Light.BlendColorAdd(BassLight, MidLight), Light.BlendColorAvg(BassLight, MidLight))
+        Light.Update()
+
+
+
         ResetRecord()
 
     End Sub
+
+
+    ''' <summary>
+    ''' Returns the energy(?) (0.0-1.0) of the bounded freqencies of sound in Hz.
+    ''' </summary>
+    ''' <param name="Low">The low.</param>
+    ''' <param name="High">The high.</param><returns>energy(?) (0.0-1.0)</returns>
+    Public Shared Function FreqencyEnergy(Low As Integer, High As Integer) As Double
+        Dim vis As New Misc.Visuals()
+        Return vis.DetectFrequency(recHandle, Low, High, False)
+    End Function
+
 
     Private Shared Sub Log(msg As String)
         Form1.txtLog.Text = msg & vbNewLine & Form1.txtLog.Text
