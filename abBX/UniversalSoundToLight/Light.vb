@@ -7,7 +7,7 @@ Public Class Light
     Public Shared LeftLightSim As PictureBox
     Public Shared RightLightSim As PictureBox
 
-    Public Shared SimOnly As Boolean = True
+    Public Shared UsingRealLights As Boolean = False
 
 
     Public Shared Sub Init(Optional LeftSim As PictureBox = Nothing, Optional RightSim As PictureBox = Nothing)
@@ -16,7 +16,7 @@ Public Class Light
         RightLightSim = RightSim
 
         'It's only a simulation unless there are no errors connecting to the driver
-        SimOnly = True
+        UsingRealLights = False
 
         Try
             'connect to the drivers
@@ -36,7 +36,7 @@ Public Class Light
             'the focus is for one light on each side, but should I add something for center, north, south?
 
             'if connect didn't error, then it isn't just a simulation
-            SimOnly = False
+            UsingRealLights = True
 
         Catch ex As amBXExceptionamBXrtdllNotFound
             MsgBox("Ensure that ambxrt.dll is in the same folder as this application.")
@@ -50,13 +50,16 @@ Public Class Light
     End Sub
 
     Public Shared Sub SetColors(LeftColor As Color, RightColor As Color)
-        If SimOnly = False Then
+        If UsingRealLights Then
             LeftLight.Color = LeftColor
             RightLight.Color = RightColor
         End If
 
         If LeftLightSim IsNot Nothing Then
             LeftLightSim.BackColor = LeftColor
+        End If
+
+        If RightLightSim IsNot Nothing Then
             RightLightSim.BackColor = RightColor
         End If
     End Sub
@@ -87,14 +90,15 @@ Public Class Light
 
 
     Public Shared Sub Update()
-        Try
-            amBX.Update(100)
-        Catch ex As amBXExceptionUpdateTimeout
-            Debug.Print("Update thread timed out.  Skipping update at " & Now.ToFileTime() & ": " & ex.Message)
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
+        If UsingRealLights Then
+            Try
+                amBX.Update(100)
+            Catch ex As amBXExceptionUpdateTimeout
+                Debug.Print("Update thread timed out.  Skipping update at " & Now.ToFileTime() & ": " & ex.Message)
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+        End If
     End Sub
 
 
