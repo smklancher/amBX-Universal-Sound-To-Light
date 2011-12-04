@@ -504,7 +504,7 @@ Namespace amBXLibrary
                 '     ie a ptr to a block of memory that ambx is managing that contains
                 '     an array of function pointers
                 Try
-                    amBXCreateInterface(_IamBX.IamBXPtr, MajorVersion, MinorVersion, AppName, AppVersion, Nothing, UsingThreads)
+                    Exceptions.Check(amBXCreateInterface(_IamBX.IamBXPtr, MajorVersion, MinorVersion, AppName, AppVersion, Nothing, UsingThreads))
 
                 Catch ex As DllNotFoundException
                     '---- throw a specific file not found error in this case
