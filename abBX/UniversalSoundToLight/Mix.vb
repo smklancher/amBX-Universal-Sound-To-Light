@@ -29,7 +29,7 @@
         'init sound sample interval, etc
         Sound.Init(MainWindow)
 
-        Interval = 100
+        Interval = 250
     End Sub
 
 
