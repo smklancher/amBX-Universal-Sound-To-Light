@@ -41,6 +41,8 @@ Public Class Sound
     End Sub
 
     Public Shared Sub Sound_Tick()
+        'reset log
+        Form1.txtLog.Text = ""
 
         'volume levels
         Dim level As Integer
